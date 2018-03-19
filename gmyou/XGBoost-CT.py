@@ -14,19 +14,46 @@ test = pd.read_csv(path+"ct-sample_test.csv")
 
 print('[{}] Finished to load data'.format(time.time() - start_time))
 
+from sklearn.preprocessing import LabelEncoder
+
+lb_make = LabelEncoder()
+train["sdk_code"] = lb_make.fit_transform(train["sdk"])
+train["platform_code"] = lb_make.fit_transform(train["platform"])
+train["pub_app_code"] = lb_make.fit_transform(train["pub_app"])
+train["pub_tagid_code"] = lb_make.fit_transform(train["pub_tagid"])
+train["country_code"] = lb_make.fit_transform(train["country"])
+train["adsize_code"] = lb_make.fit_transform(train["adsize"])
+train[["pub_app", "pub_app_code", "adsize", "adsize_code", 
+      "pub_tagid", "pub_tagid_code", "sdk", "sdk_code"]]
+
 del train['sdk']
 del train['platform']
 del train['pub_app']
+del train['pub_tagid']
 del train['country']
 del train['adsize']
-del train['pub_tagid']
+
+print(train.dtypes)
+
+
+test["sdk_code"] = lb_make.fit_transform(test["sdk"])
+test["platform_code"] = lb_make.fit_transform(test["platform"])
+test["pub_app_code"] = lb_make.fit_transform(test["pub_app"])
+test["pub_tagid_code"] = lb_make.fit_transform(test["pub_tagid"])
+test["country_code"] = lb_make.fit_transform(test["country"])
+test["adsize_code"] = lb_make.fit_transform(test["adsize"])
+test[["pub_app", "pub_app_code", "adsize", "adsize_code", 
+      "pub_tagid", "pub_tagid_code", "sdk", "sdk_code"]]
 
 del test['sdk']
 del test['platform']
 del test['pub_app']
+del test['pub_tagid']
 del test['country']
 del test['adsize']
-del test['pub_tagid']
+
+print test.dtypes
+
 
 sub = pd.DataFrame()
 
